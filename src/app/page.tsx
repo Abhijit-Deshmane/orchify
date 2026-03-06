@@ -3,6 +3,7 @@ import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
 import Image from "next/image";
 import { Suspense } from "react";
 import { Client } from "./client";
+import { LogoutButton } from "./logout";
 
 export default async function Home() {
    const queryClient = getQueryClient();
@@ -15,6 +16,7 @@ export default async function Home() {
      <HydrationBoundary state={dehydrate(queryClient)}>
       <Suspense fallback={<p> loading the data </p>}>
         <Client/>
+        <LogoutButton/>
       </Suspense>
      </HydrationBoundary>
     </div>
