@@ -30,3 +30,6 @@ ERROR [portable_pty::win::psuedocon] CreateProcessW `"pwsh.exe -Command \"cmd:[\
 ERROR [portable_pty::win::psuedocon] CreateProcessW `"pwsh.exe -Command \"cmd:[\\\"npm\\\",\\\"run\\\",\\\"inngest:dev\\\"]\"\0"` in cwd `Some("C:\\Users\\Abhijit Deshmane\\Documents\\Desktop\\Projects\\orchify\0")` failed: The system cannot find the file specified. (os error 2)
 ERROR [portable_pty::win::psuedocon] CreateProcessW `"pwsh.exe -Command \"cmd:[\\\"npm\\\",\\\"run\\\",\\\"inngest:dev\\\"]\"\0"` in cwd `Some("C:\\Users\\Abhijit Deshmane\\Documents\\Desktop\\Projects\\orchify\0")` failed: The system cannot find the file specified. (os error 2)
 ERROR [lib::error] Error: channel closed
+ERROR [portable_pty::win::psuedocon] CreateProcessW `"pwsh.exe -Command \"cmd:[\\\"npm\\\",\\\"run\\\",\\\"dev\\\"]\"\0"` in cwd `Some("C:\\Users\\Abhijit Deshmane\\Documents\\Desktop\\Projects\\orchify\0")` failed: The system cannot find the file specified. (os error 2)
+ERROR [portable_pty::win::psuedocon] CreateProcessW `"pwsh.exe -Command \"cmd:[\\\"npm\\\",\\\"run\\\",\\\"inngest:dev\\\"]\"\0"` in cwd `Some("C:\\Users\\Abhijit Deshmane\\Documents\\Desktop\\Projects\\orchify\0")` failed: The system cannot find the file specified. (os error 2)
+ERROR [lib::error] Error: channel closed
