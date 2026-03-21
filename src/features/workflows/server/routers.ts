@@ -1,10 +1,7 @@
+
 import { generateSlug } from "random-word-slugs";
 import prisma from "@/lib/db";
-import {
-  createTRPCRouter,
-  premiumProcedure,
-  protectedProcedure,
-} from "@/trpc/init";
+import { createTRPCRouter, premiumProcedure, protectedProcedure } from "@/trpc/init";
 import z from "zod";
 import { PAGINATION } from "@/config/constants";
 
@@ -25,7 +22,7 @@ export const workflowsRouter = createTRPCRouter({
           id: input.id,
           userId: ctx.auth.user.id,
         },
-      });
+      })
     }),
   updateName: protectedProcedure
     .input(z.object({ id: z.string(), name: z.string().min(1) }))
@@ -38,8 +35,8 @@ export const workflowsRouter = createTRPCRouter({
   getOne: protectedProcedure
     .input(z.object({ id: z.string() }))
     .query(({ ctx, input }) => {
-      return prisma.workflow.findUnique({
-        where: { id: input.id, userId: ctx.auth.user.id },
+      return prisma.workflow.findUniqueOrThrow({
+        where: { id: input.id, userId: ctx.auth.user.id }
       });
     }),
   getMany: protectedProcedure
@@ -52,7 +49,7 @@ export const workflowsRouter = createTRPCRouter({
           .max(PAGINATION.MAX_PAGE_SIZE)
           .default(PAGINATION.DEFAULT_PAGE_SIZE),
         search: z.string().default(""),
-      }),
+      })
     )
     .query(async ({ ctx, input }) => {
       const { page, pageSize, search } = input;
@@ -61,7 +58,7 @@ export const workflowsRouter = createTRPCRouter({
         prisma.workflow.findMany({
           skip: (page - 1) * pageSize,
           take: pageSize,
-          where: {
+          where: { 
             userId: ctx.auth.user.id,
             name: {
               contains: search,
