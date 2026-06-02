@@ -81,7 +81,7 @@ export function LoginForm() {
           router.push("/");
         },
         onError: (ctx :any) => {
-          toast.error(ctx.error.message);
+          toast.error(ctx.error.message || "Something went wrong");
         },
       }
     );
