@@ -7,8 +7,9 @@
     "build": "next build --turbopack",
     "start": "next start",
     "lint": "eslint",
+    "ngrok:dev": "dotenv -- ngrok http --url=$NGROK_URL 3000",
     "inngest:dev": "inngest-cli dev",
-    "dev:all": "mprocs"
+    "dev:all": "dotenv -- mprocs"
   },
   "dependencies": {
     "@ai-sdk/anthropic": "^3.0.58",
@@ -37,6 +38,7 @@
     "cmdk": "^1.1.1",
     "date-fns": "^4.1.0",
     "dotenv": "^17.3.1",
+    "dotenv-cli": "^11.0.0",
     "embla-carousel-react": "^8.6.0",
     "handlebars": "^4.7.9",
     "inngest": "^3.54.0",
