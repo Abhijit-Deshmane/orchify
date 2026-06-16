@@ -1,7 +1,7 @@
 import type { Realtime } from "@inngest/realtime";
 import { useInngestSubscription } from "@inngest/realtime/hooks";
 import { useEffect, useState } from "react";
-import type { NodeStatus } from "@/components/react-flow/node-status-indicator";
+import type { NodeStatus } from "@/components/react-flow/sx node-status-indicator";
 
 interface UseNodeStatusOptions {
   nodeId: string;
