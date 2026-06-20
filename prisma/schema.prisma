@@ -1,6 +1,6 @@
-
 generator client {
   provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
 }
 
 datasource db {
@@ -18,9 +18,11 @@ model User {
   updatedAt     DateTime  @default(now()) @updatedAt
   sessions      Session[]
   accounts      Account[]
-  workflow      Workflow[]
+  workflows     Workflow[]
+  credentials   Credential[]
+
   @@unique([email])
-  // @@map("user")
+  @@map("user")
 }
 
 model Session {
@@ -35,7 +37,7 @@ model Session {
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([token])
-  // @@map("session")
+  @@map("session")
 }
 
 model Account {
@@ -54,7 +56,7 @@ model Account {
   createdAt             DateTime  @default(now())
   updatedAt             DateTime  @updatedAt
 
-  // @@map("account")
+  @@map("account")
 }
 
 model Verification {
@@ -65,18 +67,40 @@ model Verification {
   createdAt  DateTime @default(now())
   updatedAt  DateTime @default(now()) @updatedAt
 
-  // @@map("verification")
+  @@map("verification")
+}
+
+model Credential {
+  id String @id @default(cuid())
+  name String
+  value String
+  type CredentialType
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  userId String
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  Node Node[]
+}
+
+enum CredentialType {
+  OPENAI
+  ANTHROPIC
+  GEMINI
 }
 
 model Workflow {
-  id          String    @id @default(cuid())
-  name        String
-  nodes       Nodes[]
+  id String @id @default(cuid())
+  name String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  nodes Node[]
   connections Connection[]
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
-  userId      String
-  user        User      @relation(fields: [userId] , references: [id] , onDelete: Cascade)
+
+  userId String
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 enum NodeType {
@@ -90,34 +114,41 @@ enum NodeType {
   OPENAI
 }
 
-model Nodes {
-  id                String   @id @default(cuid())
-  name              String
-  type              NodeType
-  position          Json
+model Node {
+  id String @id @default(cuid())
+  workflowId String
+  workflow Workflow @relation(fields: [workflowId], references: [id], onDelete: Cascade)
+
+  name String
+  type NodeType
+  position Json
+  data Json @default("{}")
+
+  credentialId String?
+  credential Credential? @relation(fields: [credentialId], references: [id])
+
   outputConnections Connection[] @relation("FromNode")
-  inputConnections  Connection[] @relation("ToNode")
-  data              Json      @default("{}")
-  workflowId        String
-  workflow          Workflow  @relation(fields: [workflowId], references: [id], onDelete: Cascade)
-  createdAt         DateTime  @default(now())
-  updatedAt         DateTime  @updatedAt
+  inputConnections Connection[] @relation("ToNode")
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Connection {
-  id          String    @id @default(cuid())
-  workflowId  String
-  workflow    Workflow  @relation(fields: [workflowId], references: [id], onDelete: Cascade)
-  fromNodeId  String
-  fromNode    Nodes     @relation("FromNode", fields: [fromNodeId], references: [id], onDelete: Cascade)
-  toNodeId    String
-  toNode      Nodes     @relation("ToNode", fields: [toNodeId], references: [id], onDelete: Cascade)
+  id String @id @default(cuid())
+  workflowId String
+  workflow Workflow @relation(fields: [workflowId], references: [id], onDelete: Cascade)
 
-  fromOutput  String    @default("main")
-  toInput     String    @default("main")
+  fromNodeId String
+  fromNode Node @relation("FromNode", fields: [fromNodeId], references: [id], onDelete: Cascade)
+  toNodeId String
+  toNode Node @relation("ToNode", fields: [toNodeId], references: [id], onDelete: Cascade)
 
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
+  fromOutput String @default("main")
+  toInput String @default("main")
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   @@unique([fromNodeId, toNodeId, fromOutput, toInput])
 }
