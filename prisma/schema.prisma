@@ -22,7 +22,7 @@ model User {
   credentials   Credential[]
 
   @@unique([email])
-  @@map("user")
+  //@@map("user")
 }
 
 model Session {
@@ -37,7 +37,7 @@ model Session {
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([token])
-  @@map("session")
+ // @@map("session")
 }
 
 model Account {
@@ -56,7 +56,7 @@ model Account {
   createdAt             DateTime  @default(now())
   updatedAt             DateTime  @updatedAt
 
-  @@map("account")
+ // @@map("account")
 }
 
 model Verification {
@@ -67,7 +67,7 @@ model Verification {
   createdAt  DateTime @default(now())
   updatedAt  DateTime @default(now()) @updatedAt
 
-  @@map("verification")
+ // @@map("verification")
 }
 
 model Credential {
@@ -112,6 +112,8 @@ enum NodeType {
   ANTHROPIC
   GEMINI
   OPENAI
+  DISCORD
+  SLACK
 }
 
 model Node {
