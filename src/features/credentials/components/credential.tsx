@@ -1,6 +1,6 @@
 "use client";
 
-//import { CredentialType } from "@prisma/client";
+import { CredentialType } from "@/generated/prisma";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { 

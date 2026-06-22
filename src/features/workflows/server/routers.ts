@@ -5,7 +5,7 @@ import { createTRPCRouter, premiumProcedure, protectedProcedure } from "@/trpc/i
 import z from "zod";
 import { PAGINATION } from "@/config/constants";
 import { inngest } from "@/inngest/client";
-import { NodeType } from "@prisma/client";
+import { NodeType } from "@/generated/prisma";
 import { sendWorkflowExecution } from "@/inngest/utils";
 
 export const workflowsRouter = createTRPCRouter({
@@ -82,12 +82,12 @@ export const workflowsRouter = createTRPCRouter({
       // Transaction to ensure consistency
       return await prisma.$transaction(async (tx) => {
         // Delete existing nodes and connections (cascade deletes connections)
-        await tx.nodes.deleteMany({
+        await tx.node.deleteMany({
           where: { workflowId: id },
         });
 
         // Create nodes
-        await tx.nodes.createMany({
+        await tx.node.createMany({
           data: nodes.map((node) => ({
             id: node.id,
             workflowId: id,

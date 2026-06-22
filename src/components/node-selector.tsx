@@ -18,7 +18,7 @@ import {
 } from "@/components/ui/sheet";
 
 import { Separator } from "./ui/separator";
-import { NodeType } from "@prisma/client";
+import { NodeType } from "@/generated/prisma";
 
 export type NodeTypeOption = {
   type: NodeType;
