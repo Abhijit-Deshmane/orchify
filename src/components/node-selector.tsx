@@ -19,6 +19,7 @@ import {
 
 import { Separator } from "./ui/separator";
 import { NodeType } from "@/generated/prisma";
+import Image from "next/image";
 
 export type NodeTypeOption = {
   type: NodeType;
@@ -174,7 +175,7 @@ export function NodeSelector({
               >
                 <div className="flex items-center gap-6 w-full overflow-hidden">
                   {typeof Icon === "string" ? (
-                    <img
+                    <Image
                       src={Icon}
                       alt={nodeType.label}
                       className="size-5 object-contain rounded-sm"
