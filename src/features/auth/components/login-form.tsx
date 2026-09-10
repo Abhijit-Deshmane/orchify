@@ -34,15 +34,15 @@ const loginSchema = z.object({
 type LoginFromValues = z.infer<typeof loginSchema>;
 
 export function LoginForm() {
-  const router = useRouter();
+    const router = useRouter();
 
-  const form = useForm<LoginFromValues>({
-    resolver: zodResolver(loginSchema),
-    defaultValues: {
-      email: "",
-      password: "",
-    },
-  });
+    const form = useForm<LoginFromValues>({
+      resolver: zodResolver(loginSchema),
+      defaultValues: {
+        email: "",
+        password: "",
+      },
+    });
 
   const signInGithub =async () => {
     await authClient.signIn.social({
